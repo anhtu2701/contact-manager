@@ -1,18 +1,38 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
+import { PaperProvider } from 'react-native-paper';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { palette } from '@/constants/palette';
+import { theme } from '@/constants/theme';
+import { SessionProvider, useSession } from '@/context/session-context';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <PaperProvider theme={theme}>
+      <SessionProvider>
+        <RootStack />
+      </SessionProvider>
+    </PaperProvider>
+  );
+}
+
+function RootStack() {
+  const { isLoggedIn } = useSession();
+
+  return (
+    <Stack
+      screenOptions={{
+        headerStyle: { backgroundColor: palette.teal },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: '700' },
+        contentStyle: { backgroundColor: palette.background },
+      }}>
+      <Stack.Protected guard={!isLoggedIn}>
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isLoggedIn} redirectTo="/login">
+        <Stack.Screen name="index" options={{ title: 'Danh bạ của tôi' }} />
+      </Stack.Protected>
+    </Stack>
   );
 }
