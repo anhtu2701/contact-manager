@@ -33,8 +33,17 @@ export default function ContactListScreen() {
             Chưa có liên hệ nào
           </Text>
         }
+        ListFooterComponent={
+          contacts.length > 0 ? (
+            <Text variant="bodySmall" style={styles.hint}>
+              Nhấn vào một liên hệ để xem chi tiết
+            </Text>
+          ) : undefined
+        }
         ItemSeparatorComponent={Separator}
-        renderItem={({ item }) => <ContactItem contact={item} />}
+        renderItem={({ item }) => (
+          <ContactItem contact={item} onPress={() => router.push(`/contact/${item.id}`)} />
+        )}
       />
 
       <View style={[styles.footer, { paddingBottom: bottom + 12 }]}>
@@ -76,6 +85,11 @@ const styles = StyleSheet.create({
   },
   empty: {
     marginTop: 48,
+    textAlign: 'center',
+    color: palette.muted,
+  },
+  hint: {
+    marginTop: 16,
     textAlign: 'center',
     color: palette.muted,
   },

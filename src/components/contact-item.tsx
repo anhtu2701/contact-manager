@@ -12,12 +12,13 @@ import { formatPhone } from '@/utils/format-phone';
 
 type ContactItemProps = {
   contact: Contact;
+  onPress: () => void;
 };
 
-export function ContactItem({ contact }: ContactItemProps) {
+export function ContactItem({ contact, onPress }: ContactItemProps) {
   return (
     <Animated.View entering={FadeInDown}>
-      <Card mode="outlined" style={styles.card}>
+      <Card mode="outlined" style={styles.card} onPress={onPress}>
         <View style={styles.row}>
           <AvatarInitial name={contact.fullName} color={GROUP_AVATAR_COLORS[contact.group]} />
           <View style={styles.info}>

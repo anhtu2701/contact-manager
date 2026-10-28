@@ -36,6 +36,7 @@ function RootStack() {
       <Stack.Protected guard={isLoggedIn} redirectTo="/login">
         <Stack.Screen name="index" options={{ title: 'Danh bạ của tôi' }} />
         <Stack.Screen name="add" options={{ title: 'Thêm liên hệ' }} />
+        <Stack.Screen name="contact/[id]" options={{ title: 'Chi tiết liên hệ' }} />
       </Stack.Protected>
     </Stack>
   );
