@@ -3,13 +3,16 @@ import { PaperProvider } from 'react-native-paper';
 
 import { palette } from '@/constants/palette';
 import { theme } from '@/constants/theme';
+import { ContactsProvider } from '@/context/contacts-context';
 import { SessionProvider, useSession } from '@/context/session-context';
 
 export default function RootLayout() {
   return (
     <PaperProvider theme={theme}>
       <SessionProvider>
-        <RootStack />
+        <ContactsProvider>
+          <RootStack />
+        </ContactsProvider>
       </SessionProvider>
     </PaperProvider>
   );
